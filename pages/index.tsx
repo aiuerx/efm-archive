@@ -211,7 +211,7 @@ export default function Home({ posts }: Props) {
 
       <footer className="border-t border-neutral-200 bg-neutral-50">
         <div className="max-w-5xl mx-auto px-4 py-6 text-xs text-neutral-600">
-          © {new Date().getFullYear()} EFM. Minimal archive. Built on Buttondown.
+          © {new Date().getFullYear()} EFM.
         </div>
       </footer>
     </div>
