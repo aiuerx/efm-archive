@@ -180,7 +180,7 @@ export default function Home({ posts }: Props) {
         {/* Subscribe block */}
         <div
           id="subscribe"
-          className="mt-12 rounded-2xl border border-neutral-200 bg-white p-6"
+          className="scroll-mt-24 mt-12 rounded-2xl border border-neutral-200 bg-white p-6"
         >
           <h3 className="text-base font-semibold">Subscribe to EFM</h3>
           <p className="mt-1 text-sm text-neutral-600">
