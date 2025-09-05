@@ -47,16 +47,13 @@ export default function Home({ posts }: Props) {
       <header className="sticky top-0 z-10 backdrop-blur bg-neutral-50/80 border-b border-neutral-200">
         <div className="max-w-5xl mx-auto px-4 py-4 flex items-center justify-between">
           {/* Brand + Title */}
-          <div className="flex items-center gap-3">
-            {/* If you ever want to remove this boxed mark, swap for plain text: <span className="text-sm font-semibold tracking-wide">EFM</span> */}
-            <span className="inline-flex h-9 w-9 items-center justify-center rounded-xl border border-neutral-300 text-sm font-medium">
-              EFM
-            </span>
-            <div>
-              <h1 className="text-xl font-semibold leading-tight">{title}</h1>
-              <p className="text-sm text-neutral-600">{tagline}</p>
-            </div>
-          </div>
+         <div className="flex items-center gap-3">
+  <div>
+    <h1 className="text-xl font-semibold leading-tight">{title}</h1>
+    <p className="text-sm text-neutral-600">{tagline}</p>
+  </div>
+</div>
+
 
           {/* Right-side actions: Home + Subscribe */}
           <div className="flex items-center gap-2">
