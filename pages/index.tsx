@@ -17,6 +17,11 @@ export default function Home({ posts }: Props) {
   const [activeTags, setActiveTags] = useState<string[]>([]);
   const [sort, setSort] = useState<"newest" | "oldest">("newest");
 
+  // Fallbacks so you always see something even if config values are blank
+  const title = SITE_TITLE || "Signal Notes — Archive";
+  const tagline =
+    SITE_TAGLINE || "Musings on synthesis, sound design, and electronic tools.";
+
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
     let out = posts.filter((p) => {
@@ -25,7 +30,8 @@ export default function Home({ posts }: Props) {
         p.title.toLowerCase().includes(q) ||
         p.summary.toLowerCase().includes(q) ||
         p.tags.join(" ").toLowerCase().includes(q);
-      const tagOk = activeTags.length === 0 || activeTags.every((t) => p.tags.includes(t));
+      const tagOk =
+        activeTags.length === 0 || activeTags.every((t) => p.tags.includes(t));
       return hit && tagOk;
     });
     out.sort((a, b) => {
@@ -40,21 +46,41 @@ export default function Home({ posts }: Props) {
     <div className="min-h-screen bg-neutral-50 text-neutral-900">
       <header className="sticky top-0 z-10 backdrop-blur bg-neutral-50/80 border-b border-neutral-200">
         <div className="max-w-5xl mx-auto px-4 py-4 flex items-center justify-between">
+          {/* Brand + Title */}
           <div className="flex items-center gap-3">
-            <span className="inline-flex h-9 w-9 items-center justify-center rounded-xl border border-neutral-300 text-sm font-medium">EFM</span>
+            {/* If you ever want to remove this boxed mark, swap for plain text: <span className="text-sm font-semibold tracking-wide">EFM</span> */}
+            <span className="inline-flex h-9 w-9 items-center justify-center rounded-xl border border-neutral-300 text-sm font-medium">
+              EFM
+            </span>
             <div>
-              <h1 className="text-xl font-semibold leading-tight">{SITE_TITLE}</h1>
-              <p className="text-sm text-neutral-600">{SITE_TAGLINE}</p>
+              <h1 className="text-xl font-semibold leading-tight">{title}</h1>
+              <p className="text-sm text-neutral-600">{tagline}</p>
             </div>
           </div>
-          <a href="#subscribe" className="hidden sm:inline-flex items-center gap-2 rounded-xl border border-neutral-300 px-3 py-2 text-sm hover:bg-neutral-100">
-            <ExternalLink className="h-4 w-4" /> Subscribe
-          </a>
+
+          {/* Right-side actions: Home + Subscribe */}
+          <div className="flex items-center gap-2">
+            <a
+              href="https://efm.plus"
+              className="inline-flex items-center gap-2 rounded-xl border border-neutral-300 px-3 py-2 text-sm hover:bg-neutral-100"
+            >
+              Home
+            </a>
+            <a
+              href="#subscribe"
+              className="hidden sm:inline-flex items-center gap-2 rounded-xl border border-neutral-300 px-3 py-2 text-sm hover:bg-neutral-100"
+            >
+              <ExternalLink className="h-4 w-4" />
+              Subscribe
+            </a>
+          </div>
         </div>
       </header>
 
+      {/* Controls */}
       <section className="max-w-5xl mx-auto px-4 py-4 sm:py-6">
         <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
+          {/* Search */}
           <label className="relative block">
             <span className="sr-only">Search</span>
             <span className="absolute inset-y-0 left-3 flex items-center">
@@ -68,26 +94,37 @@ export default function Home({ posts }: Props) {
             />
           </label>
 
+          {/* Tags + Sort */}
           <div className="sm:col-span-2 flex flex-wrap items-center gap-2">
             <span className="inline-flex items-center gap-2 text-sm text-neutral-600">
-              <Filter className="h-4 w-4" /> Filter
+              <Filter className="h-4 w-4" />
+              Filter
             </span>
             {KNOWN_TAGS.map((t) => {
               const on = activeTags.includes(t);
               return (
                 <button
                   key={t}
-                  onClick={() => setActiveTags((prev) => (on ? prev.filter((x) => x !== t) : [...prev, t]))}
+                  onClick={() =>
+                    setActiveTags((prev) =>
+                      on ? prev.filter((x) => x !== t) : [...prev, t]
+                    )
+                  }
                   className={
                     "text-xs rounded-full border px-3 py-1 transition " +
-                    (on ? "border-neutral-900 bg-neutral-900 text-white" : "border-neutral-300 bg-white hover:bg-neutral-100")
+                    (on
+                      ? "border-neutral-900 bg-neutral-900 text-white"
+                      : "border-neutral-300 bg-white hover:bg-neutral-100")
                   }
                 >
                   {t}
                 </button>
               );
             })}
-            <button onClick={() => setActiveTags([])} className="ml-auto text-xs text-neutral-600 underline underline-offset-4 hover:text-neutral-900">
+            <button
+              onClick={() => setActiveTags([])}
+              className="ml-auto text-xs text-neutral-600 underline underline-offset-4 hover:text-neutral-900"
+            >
               Clear
             </button>
             <select
@@ -102,12 +139,18 @@ export default function Home({ posts }: Props) {
         </div>
       </section>
 
+      {/* List */}
       <main className="max-w-5xl mx-auto px-4 pb-12">
         <ul className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           {filtered.map((p) => (
-            <li key={p.id} className="group rounded-2xl border border-neutral-200 bg-white p-4 hover:shadow-sm transition">
+            <li
+              key={p.id}
+              className="group rounded-2xl border border-neutral-200 bg-white p-4 hover:shadow-sm transition"
+            >
               <a href={p.url} className="block">
-                <h2 className="text-base font-semibold leading-snug group-hover:underline underline-offset-4">{p.title}</h2>
+                <h2 className="text-base font-semibold leading-snug group-hover:underline underline-offset-4">
+                  {p.title}
+                </h2>
                 <div className="mt-2 flex items-center gap-3 text-xs text-neutral-600">
                   <span className="inline-flex items-center gap-1">
                     <Calendar className="h-3 w-3" />
@@ -119,23 +162,32 @@ export default function Home({ posts }: Props) {
                     {p.tags.join(", ") || "untagged"}
                   </span>
                 </div>
-                <p className="mt-3 text-sm text-neutral-700 line-clamp-3">{p.summary}</p>
+                <p className="mt-3 text-sm text-neutral-700 line-clamp-3">
+                  {p.summary}
+                </p>
               </a>
             </li>
           ))}
         </ul>
 
+        {/* Empty state */}
         {filtered.length === 0 && (
-          <div className="mt-16 text-center text-sm text-neutral-600">No posts match your search/filters.</div>
+          <div className="mt-16 text-center text-sm text-neutral-600">
+            No posts match your search/filters.
+          </div>
         )}
 
-        <div id="subscribe" className="mt-12 rounded-2xl border border-neutral-200 bg-white p-6">
+        {/* Subscribe block */}
+        <div
+          id="subscribe"
+          className="mt-12 rounded-2xl border border-neutral-200 bg-white p-6"
+        >
           <h3 className="text-base font-semibold">Subscribe to EFM</h3>
           <p className="mt-1 text-sm text-neutral-600">
             One email. Practical techniques, routing tips, occasional downloads.
           </p>
           <form
-            action="https://buttondown.email/api/emails/embed-subscribe/efm" /* replace with your handle */
+            action="https://buttondown.email/api/emails/embed-subscribe/efm" // replace with your handle
             method="post"
             target="popupwindow"
             className="mt-3 flex gap-2"
@@ -147,11 +199,16 @@ export default function Home({ posts }: Props) {
               placeholder="you@example.com"
               className="flex-1 rounded-xl border border-neutral-300 bg-white px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-neutral-300"
             />
-            <button type="submit" className="rounded-xl bg-neutral-900 px-4 py-2 text-sm text-white hover:bg-neutral-800">
+            <button
+              type="submit"
+              className="rounded-xl bg-neutral-900 px-4 py-2 text-sm text-white hover:bg-neutral-800"
+            >
               Subscribe
             </button>
           </form>
-          <p className="mt-2 text-xs text-neutral-500">We send rarely. No comments, no spam.</p>
+          <p className="mt-2 text-xs text-neutral-500">
+            We send rarely. No comments, no spam.
+          </p>
         </div>
       </main>
 
