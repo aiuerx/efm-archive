@@ -1,3 +1,4 @@
+import Head from "next/head";
 import { useMemo, useState } from "react";
 import type { GetStaticProps } from "next";
 import { Calendar, Filter, Search, Tag, ExternalLink } from "lucide-react";
@@ -44,6 +45,13 @@ export default function Home({ posts }: Props) {
 
   return (
     <div className="min-h-screen bg-neutral-50 text-neutral-900">
+      <Head>
+  <title>Signal Notes — EFM</title>
+  <meta name="description" content="Musings on synthesis, sound design, and electronic tools." />
+  <meta property="og:title" content="Signal Notes — EFM" />
+  <meta property="og:description" content="Musings on synthesis, sound design, and electronic tools." />
+</Head>
+
       <header className="sticky top-0 z-10 backdrop-blur bg-neutral-50/80 border-b border-neutral-200">
         <div className="max-w-5xl mx-auto px-4 py-4 flex items-center justify-between">
           {/* Brand + Title */}
