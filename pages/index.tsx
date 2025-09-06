@@ -218,10 +218,18 @@ export default function Home({ posts }: Props) {
       </main>
 
       <footer className="border-t border-neutral-200 bg-neutral-50">
-        <div className="max-w-5xl mx-auto px-4 py-6 text-xs text-neutral-600">
-          © {new Date().getFullYear()} EFM.
-        </div>
-      </footer>
+  <div className="max-w-5xl mx-auto px-4 py-6 text-xs text-neutral-600 space-y-2">
+    <div>© {new Date().getFullYear()} EFM.</div>
+    <div>
+      💬 Do you have tips, suggestions, or something interesting to share?
+      <br />
+      Get in touch:{" "}
+      <a href="mailto:notes@efm.plus" className="text-neutral-900 hover:underline">
+        notes@efm.plus
+      </a>
+    </div>
+  </div>
+</footer>
     </div>
   );
 }
